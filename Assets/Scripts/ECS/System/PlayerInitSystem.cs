@@ -12,6 +12,10 @@ namespace ECS.System
             var world = systems.GetWorld();
         
             var playerEntity = world.NewEntity();
+            
+            var playerComponentPool = world.GetPool<PlayerComponent>();
+            playerComponentPool.Add(playerEntity);
+            ref var playerComponent = ref playerComponentPool.Get(playerEntity);
         
             var movementComponentPool = world.GetPool<MovableComponent>();
             movementComponentPool.Add(playerEntity);
@@ -20,8 +24,11 @@ namespace ECS.System
             var inputComponent = world.GetPool<InputEventComponent>();
             inputComponent.Add(playerEntity);
 
-            var spawnedPlayer = Object.Instantiate(PlayerInitData.Load().playerPrefab, Vector3.zero, Quaternion.identity);
-            movementComponent.MoveSpeed = PlayerInitData.Load().defaultSpeed;
+            var spawnedPlayer = Object.Instantiate(InitData.Load().playerPrefab, Vector3.zero, Quaternion.identity);
+
+            playerComponent.PlayerTransform = spawnedPlayer.transform;
+            
+            movementComponent.MoveSpeed = InitData.Load().defaultSpeed;
             movementComponent.EntityTransform = spawnedPlayer.transform;
         }
     }

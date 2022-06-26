@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerInitData
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5277001923204450842, guid: 5c69fff0219c60146bbb2c64c6a0e169, type: 3}
+  cameraPrefab: {fileID: 5405041907596633850, guid: 5cea87e229fea624aba3b802a18939ac, type: 3}
   defaultSpeed: 3
