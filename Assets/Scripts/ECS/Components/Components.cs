@@ -7,17 +7,26 @@ namespace ECS.Components
         public Transform PlayerTransform;
         public CapsuleCollider PlayerCollider;
     }
-    
-    public struct InputEventComponent { public Vector3 Direction; }
+
+    public struct MoveDirectionComponent
+    {
+        public Vector3 Direction;
+    }
 
     public struct MovableComponent
     {
         public Transform EntityTransform;
         public float MoveSpeed;
     }
-    
+
     public struct CameraFollowComponent
     {
         public Transform CameraTransform;
+        public Camera Camera;
+    }
+
+    public struct TargetPointComponent
+    {
+        public Vector3 Position;
     }
 }

@@ -20,11 +20,12 @@ namespace ECS.System
             
             var camera = Object.Instantiate(InitData.Load().cameraPrefab, Vector3.zero, Quaternion.identity);
             cameraComponent.CameraTransform = camera.transform;
+            cameraComponent.Camera = camera.GetComponentInChildren<Camera>();
         }
 
         public void Run(EcsSystems systems)
         {
-            var filter = systems.GetWorld().Filter<PlayerComponent>().End();
+            var filter = systems.GetWorld().Filter<PlayerComponent>().Inc<CameraFollowComponent>().End();
             var playerPool = systems.GetWorld().GetPool<PlayerComponent>();
             var cameraPool = systems.GetWorld().GetPool<CameraFollowComponent>();
 

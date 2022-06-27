@@ -19,8 +19,10 @@ namespace ECS.MonoBehaviours
             _initSystems.Init();
             
             _runSystems.Add(new CameraSystem());
-            _runSystems.Add(new InputSystem());
+            //_runSystems.Add(new InputSystem());
             _runSystems.Add(new MoveSystem());
+            _runSystems.Add(new MoveToPointSystem());
+            _runSystems.Add(new OnClickInputSystem());
             _runSystems.Init();
         }
 

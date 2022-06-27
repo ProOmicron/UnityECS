@@ -9,8 +9,8 @@ namespace ECS.System
         public void Run(EcsSystems systems)
         {
             var world = systems.GetWorld();
-            var filter = world.Filter<InputEventComponent>().End();
-            var pool = world.GetPool<InputEventComponent>();
+            var filter = world.Filter<MoveDirectionComponent>().End();
+            var pool = world.GetPool<MoveDirectionComponent>();
 
             var x = Input.GetAxis("Horizontal");
             var y = Input.GetAxis("Vertical");

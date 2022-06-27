@@ -8,16 +8,16 @@ namespace ECS.System
     {
         public void Run(EcsSystems systems)
         {
-            var filter = systems.GetWorld().Filter<MovableComponent>().End();
+            var filter = systems.GetWorld().Filter<MovableComponent>().Inc<MoveDirectionComponent>().End();
             var pool = systems.GetWorld().GetPool<MovableComponent>();
-            var inputPool = systems.GetWorld().GetPool<InputEventComponent>();
+            var inputPool = systems.GetWorld().GetPool<MoveDirectionComponent>();
         
             foreach (var entity in filter)
             {
                 ref var moveComponent = ref pool.Get(entity);
                 ref var inputComponent = ref inputPool.Get(entity);
 
-                moveComponent.EntityTransform.position = (Time.deltaTime * moveComponent.MoveSpeed * inputComponent.Direction.normalized) + moveComponent.EntityTransform.position;
+                moveComponent.EntityTransform.position += (Time.deltaTime * moveComponent.MoveSpeed * inputComponent.Direction.normalized);
             }
         }
     }

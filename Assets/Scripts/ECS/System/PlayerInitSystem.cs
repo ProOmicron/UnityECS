@@ -21,8 +21,11 @@ namespace ECS.System
             movementComponentPool.Add(playerEntity);
             ref var movementComponent = ref movementComponentPool.Get(playerEntity);
         
-            var inputComponent = world.GetPool<InputEventComponent>();
-            inputComponent.Add(playerEntity);
+            var moveDirectionComponent = world.GetPool<MoveDirectionComponent>();
+            moveDirectionComponent.Add(playerEntity);
+            
+            var targetPointComponentPool = world.GetPool<TargetPointComponent>();
+            targetPointComponentPool.Add(playerEntity);
 
             var spawnedPlayer = Object.Instantiate(InitData.Load().playerPrefab, Vector3.zero, Quaternion.identity);
 
