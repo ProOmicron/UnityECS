@@ -22,7 +22,6 @@ namespace ECS.Components
     public struct CameraFollowComponent
     {
         public Transform CameraTransform;
-        public Camera Camera;
     }
 
     public struct TargetPointComponent

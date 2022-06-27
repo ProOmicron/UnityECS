@@ -18,7 +18,7 @@ namespace ECS.System
                 ref var moveComponent = ref pool.Get(entity);
                 ref var inputComponent = ref inputPool.Get(entity);
                 
-                moveComponent.EntityTransform.position += (ECSTimeService.DeltaTime * moveComponent.MoveSpeed * inputComponent.Direction.normalized);
+                moveComponent.EntityTransform.position += (EcsTimeService.DeltaTime * moveComponent.MoveSpeed * inputComponent.Direction.normalized);
             }
         }
     }

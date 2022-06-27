@@ -15,7 +15,7 @@ namespace ECS.MonoBehaviours
             _initSystems = new EcsSystems(_world);
             _runSystems = new EcsSystems(_world);
 
-            _initSystems.Add(new PlayerInitSystem());
+            _initSystems.Add(new PlayerSystem());
             _initSystems.Init();
             
             _runSystems.Add(new CameraSystem());

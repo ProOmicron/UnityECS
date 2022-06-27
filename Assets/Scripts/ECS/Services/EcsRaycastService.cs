@@ -2,17 +2,17 @@
 
 namespace ECS.Services
 {
-    public class ECSRaycastService
+    public static class EcsRaycastService
     {
         public static bool GetPosition(Vector2 mousePosition, out Vector3 targetPos)
         {
             if (Camera.main != null)
             {
+                var hPlane = new Plane(Vector3.up, Vector3.zero);
                 var ray = Camera.main.ScreenPointToRay(mousePosition);
-
-                if (Physics.Raycast(ray, out var raycastHit))
+                if (hPlane.Raycast(ray, out var distance))
                 {
-                    targetPos = raycastHit.point;
+                    targetPos = ray.GetPoint(distance);
                     return true;
                 }
             }

@@ -13,8 +13,8 @@ namespace ECS.System
             var filter = world.Filter<MoveDirectionComponent>().End();
             var pool = world.GetPool<MoveDirectionComponent>();
 
-            var x = ECSInputService.Horizontal;
-            var y = ECSInputService.Vertical;
+            var x = EcsInputService.Horizontal;
+            var y = EcsInputService.Vertical;
 
             foreach (var entity in filter)
             {

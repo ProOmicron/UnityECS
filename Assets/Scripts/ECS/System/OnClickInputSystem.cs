@@ -11,24 +11,19 @@ namespace ECS.System
         {
             var world = systems.GetWorld();
             
-            var filterCamera = world.Filter<CameraFollowComponent>().End();
-            var poolCamera = world.GetPool<CameraFollowComponent>();
-            
             var filterTarget = world.Filter<TargetPointComponent>().End();
             var poolTarget = world.GetPool<TargetPointComponent>();
-
-            var onClick = ECSInputService.OnClick;
+            
+            var onClick = EcsInputService.OnClick;
             if (!onClick) return;
 
-            var mousePosition = ECSInputService.MousePosition;
+            var mousePosition = EcsInputService.MousePosition;
 
-            foreach (var cameraEntity in filterCamera)
             foreach (var targetEntity in filterTarget)
             {
-                ref var cameraFollowComponent = ref poolCamera.Get(cameraEntity);
                 ref var targetPointComponent = ref poolTarget.Get(targetEntity);
-
-                if (ECSRaycastService.GetPosition(mousePosition, out var targetPosition))
+                
+                if (EcsRaycastService.GetPosition(mousePosition, out var targetPosition))
                 {
                     targetPointComponent.Position = targetPosition;
                 }

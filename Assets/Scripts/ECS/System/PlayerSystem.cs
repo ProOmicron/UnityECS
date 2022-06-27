@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ECS.System
 {
-    public class PlayerInitSystem : IEcsInitSystem
+    public class PlayerSystem : IEcsInitSystem
     {    
         public void Init(EcsSystems systems)
         {

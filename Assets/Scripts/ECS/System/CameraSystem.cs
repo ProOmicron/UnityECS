@@ -18,7 +18,6 @@ namespace ECS.System
             
             var camera = Object.Instantiate(InitData.Load().cameraPrefab, Vector3.zero, Quaternion.identity);
             cameraComponent.CameraTransform = camera.transform;
-            cameraComponent.Camera = camera.GetComponentInChildren<Camera>();
         }
 
         public void Run(EcsSystems systems)
