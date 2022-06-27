@@ -18,7 +18,6 @@ namespace ECS.System
 
             var onClick = Input.GetMouseButtonDown(0);
             if (!onClick) return;
-            Debug.Log("OnClick");
 
             var mousePosition = Input.mousePosition;
 
@@ -32,7 +31,6 @@ namespace ECS.System
                 
                 if (Physics.Raycast(ray, out var raycastHit))
                 {
-                    Debug.Log("Hit: " + raycastHit.point);
                     targetPointComponent.Position = raycastHit.point;
                 }
             }
