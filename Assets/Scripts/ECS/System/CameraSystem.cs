@@ -7,16 +7,14 @@ namespace ECS.System
 {
     public class CameraSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private int _cameraEntity;
-        
         public void Init(EcsSystems systems)
         {
             var world = systems.GetWorld();
-            _cameraEntity = world.NewEntity();
+            var cameraEntity = world.NewEntity();
 
             var cameraPool = world.GetPool<CameraFollowComponent>();
-            cameraPool.Add(_cameraEntity);
-            ref var cameraComponent = ref cameraPool.Get(_cameraEntity);
+            cameraPool.Add(cameraEntity);
+            ref var cameraComponent = ref cameraPool.Get(cameraEntity);
             
             var camera = Object.Instantiate(InitData.Load().cameraPrefab, Vector3.zero, Quaternion.identity);
             cameraComponent.CameraTransform = camera.transform;
@@ -25,15 +23,18 @@ namespace ECS.System
 
         public void Run(EcsSystems systems)
         {
-            var filter = systems.GetWorld().Filter<PlayerComponent>().Inc<CameraFollowComponent>().End();
-            var playerPool = systems.GetWorld().GetPool<PlayerComponent>();
-            var cameraPool = systems.GetWorld().GetPool<CameraFollowComponent>();
+            var filterPlayer = systems.GetWorld().Filter<PlayerComponent>().End();
+            var poolPlayer = systems.GetWorld().GetPool<PlayerComponent>();
+            
+            var filterCamera = systems.GetWorld().Filter<PlayerComponent>().End();
+            var poolCamera = systems.GetWorld().GetPool<CameraFollowComponent>();
 
-            ref var cameraComponent = ref cameraPool.Get(_cameraEntity);
-
-            foreach (var entity in filter)
+            
+            foreach (var entityCamera in filterCamera)
+            foreach (var entityPlayer in filterPlayer)
             {
-                ref var playerComponent = ref playerPool.Get(entity);
+                ref var playerComponent = ref poolPlayer.Get(entityPlayer);
+                ref var cameraComponent = ref poolCamera.Get(entityCamera);
 
                 cameraComponent.CameraTransform.position = playerComponent.PlayerTransform.position;
             }
