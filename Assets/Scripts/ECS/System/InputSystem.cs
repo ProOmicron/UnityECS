@@ -1,4 +1,5 @@
 using ECS.Components;
+using ECS.Services;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -12,8 +13,8 @@ namespace ECS.System
             var filter = world.Filter<MoveDirectionComponent>().End();
             var pool = world.GetPool<MoveDirectionComponent>();
 
-            var x = Input.GetAxis("Horizontal");
-            var y = Input.GetAxis("Vertical");
+            var x = ECSInputService.Horizontal;
+            var y = ECSInputService.Vertical;
 
             foreach (var entity in filter)
             {

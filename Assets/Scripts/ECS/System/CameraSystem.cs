@@ -26,7 +26,7 @@ namespace ECS.System
             var filterPlayer = systems.GetWorld().Filter<PlayerComponent>().End();
             var poolPlayer = systems.GetWorld().GetPool<PlayerComponent>();
             
-            var filterCamera = systems.GetWorld().Filter<PlayerComponent>().End();
+            var filterCamera = systems.GetWorld().Filter<CameraFollowComponent>().End();
             var poolCamera = systems.GetWorld().GetPool<CameraFollowComponent>();
 
             

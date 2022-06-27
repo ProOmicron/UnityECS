@@ -1,4 +1,5 @@
 using ECS.Components;
+using ECS.Services;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -16,8 +17,8 @@ namespace ECS.System
             {
                 ref var moveComponent = ref pool.Get(entity);
                 ref var inputComponent = ref inputPool.Get(entity);
-
-                moveComponent.EntityTransform.position += (Time.deltaTime * moveComponent.MoveSpeed * inputComponent.Direction.normalized);
+                
+                moveComponent.EntityTransform.position += (ECSTimeService.DeltaTime * moveComponent.MoveSpeed * inputComponent.Direction.normalized);
             }
         }
     }

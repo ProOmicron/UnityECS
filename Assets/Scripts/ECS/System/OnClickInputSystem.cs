@@ -1,4 +1,5 @@
 ﻿using ECS.Components;
+using ECS.Services;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -16,22 +17,20 @@ namespace ECS.System
             var filterTarget = world.Filter<TargetPointComponent>().End();
             var poolTarget = world.GetPool<TargetPointComponent>();
 
-            var onClick = Input.GetMouseButtonDown(0);
+            var onClick = ECSInputService.OnClick;
             if (!onClick) return;
 
-            var mousePosition = Input.mousePosition;
+            var mousePosition = ECSInputService.MousePosition;
 
             foreach (var cameraEntity in filterCamera)
             foreach (var targetEntity in filterTarget)
             {
                 ref var cameraFollowComponent = ref poolCamera.Get(cameraEntity);
                 ref var targetPointComponent = ref poolTarget.Get(targetEntity);
-                
-                var ray = cameraFollowComponent.Camera.ScreenPointToRay(mousePosition);
-                
-                if (Physics.Raycast(ray, out var raycastHit))
+
+                if (ECSRaycastService.GetPosition(mousePosition, out var targetPosition))
                 {
-                    targetPointComponent.Position = raycastHit.point;
+                    targetPointComponent.Position = targetPosition;
                 }
             }
         }
