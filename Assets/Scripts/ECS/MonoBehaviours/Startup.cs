@@ -1,3 +1,4 @@
+using ECS.Door.System;
 using ECS.Player.System;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace ECS.MonoBehaviours
             _runSystems = new EcsSystems(_world);
 
             _initSystems.Add(new PlayerSystem());
+            
+            _initSystems.Add(new ButtonDoorInitSystem());
             _initSystems.Init();
             
             _runSystems.Add(new CameraSystem());
@@ -23,7 +26,12 @@ namespace ECS.MonoBehaviours
             _runSystems.Add(new MoveSystem());
             _runSystems.Add(new MoveToPointSystem());
             _runSystems.Add(new OnClickInputSystem());
+
+            _runSystems.Add(new ButtonActivateSystem());
+            _runSystems.Add(new DoorOpenSystem());
             _runSystems.Init();
+            
+            
         }
 
         void Update()

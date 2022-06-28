@@ -13,5 +13,16 @@ MonoBehaviour:
   m_Name: PlayerInitData
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 5277001923204450842, guid: 5c69fff0219c60146bbb2c64c6a0e169, type: 3}
-  cameraPrefab: {fileID: 5405041907596633850, guid: 5cea87e229fea624aba3b802a18939ac, type: 3}
   defaultSpeed: 3
+  cameraPrefab: {fileID: 5405041907596633850, guid: 5cea87e229fea624aba3b802a18939ac, type: 3}
+  doorPrefab: {fileID: 3456817690205728882, guid: dde308aa7c45e1c4ba0189ec85538f4f, type: 3}
+  buttonPrefab: {fileID: 7809823602938173238, guid: 215cf7dbfc045c148a12f2ee1da5c917, type: 3}
+  buttonActivationDistance: 1
+  DoorButtonInfos:
+  - DoorStartPosition: {x: -1.5, y: 1, z: 10}
+    DoorStartRotation: {x: 0, y: 0, z: 0}
+    DoorEndPosition: {x: -1.5, y: 4, z: 10}
+    DoorEndRotation: {x: 0, y: 0, z: 0}
+    ButtonPosition: {x: -3, y: 0, z: 5}
+    MoveSpeed: 1
+    Color: {r: 1, g: 1, b: 1, a: 1}
