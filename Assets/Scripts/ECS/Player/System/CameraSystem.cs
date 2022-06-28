@@ -1,9 +1,9 @@
-using ECS.Components;
-using Leopotam.EcsLite;
+using ECS.Player.Components;
 using ECS.ScriptableObjects;
+using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace ECS.System
+namespace ECS.Player.System
 {
     public class CameraSystem : IEcsInitSystem, IEcsRunSystem
     {

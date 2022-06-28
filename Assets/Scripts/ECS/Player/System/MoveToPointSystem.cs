@@ -1,8 +1,7 @@
-﻿using ECS.Components;
+﻿using ECS.Player.Components;
 using Leopotam.EcsLite;
-using UnityEngine;
 
-namespace ECS.System
+namespace ECS.Player.System
 {
     public class MoveToPointSystem: IEcsRunSystem
     {

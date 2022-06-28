@@ -1,9 +1,8 @@
-﻿using ECS.Components;
-using ECS.Services;
+﻿using ECS.Player.Components;
+using ECS.Player.Services;
 using Leopotam.EcsLite;
-using UnityEngine;
 
-namespace ECS.System
+namespace ECS.Player.System
 {
     public class OnClickInputSystem : IEcsRunSystem
     {

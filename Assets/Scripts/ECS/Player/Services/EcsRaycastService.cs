@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ECS.Services
+namespace ECS.Player.Services
 {
     public static class EcsRaycastService
     {

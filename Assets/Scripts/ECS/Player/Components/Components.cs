@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ECS.Components
+namespace ECS.Player.Components
 {
     public struct PlayerComponent
     {
