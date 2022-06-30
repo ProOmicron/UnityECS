@@ -3,6 +3,7 @@ using ECS.Door.Components;
 using ECS.Door.Service;
 using ECS.MonoBehaviours;
 using ECS.ScriptableObjects;
+using ECS.Services;
 using Leopotam.EcsLite;
 
 namespace ECS.Door.System
@@ -27,25 +28,25 @@ namespace ECS.Door.System
                 var doorTransformComponentPool = world.GetPool<TransformComponent>();
                 doorTransformComponentPool.Add(doorButtonEntity);
                 ref var doorTransformComponent = ref doorTransformComponentPool.Get(doorButtonEntity);
-                doorTransformComponent.Position = info[i].doorStartPosition;
-                doorTransformComponent.Rotation = info[i].doorStartRotation;
+                doorTransformComponent.Position = Converter.Vec3UnityToEcs(info[i].doorStartPosition);
+                doorTransformComponent.Rotation = Converter.Vec3UnityToEcs(info[i].doorStartRotation);
 
                 var buttonPositionComponentPool = world.GetPool<ButtonPositionComponent>();
                 buttonPositionComponentPool.Add(doorButtonEntity);
                 ref var buttonPosition = ref buttonPositionComponentPool.Get(doorButtonEntity);
-                buttonPosition.Position = info[i].buttonPosition;
+                buttonPosition.Position = Converter.Vec3UnityToEcs(info[i].buttonPosition);
             
                 var doorStartPositionComponentPool = world.GetPool<DoorStartPositionComponent>();
                 doorStartPositionComponentPool.Add(doorButtonEntity);
                 ref var doorStartPositionComponent = ref doorStartPositionComponentPool.Get(doorButtonEntity);
-                doorStartPositionComponent.Position = info[i].doorStartPosition;
-                doorStartPositionComponent.Rotation = info[i].doorStartRotation;
+                doorStartPositionComponent.Position = Converter.Vec3UnityToEcs(info[i].doorStartPosition);
+                doorStartPositionComponent.Rotation = Converter.Vec3UnityToEcs(info[i].doorStartRotation);
             
                 var doorEndPositionComponentPool = world.GetPool<DoorEndPositionComponent>();
                 doorEndPositionComponentPool.Add(doorButtonEntity);
                 ref var doorEndPositionComponent = ref doorEndPositionComponentPool.Get(doorButtonEntity);
-                doorEndPositionComponent.Position = info[i].doorEndPosition;
-                doorEndPositionComponent.Rotation = info[i].doorEndRotation;
+                doorEndPositionComponent.Position = Converter.Vec3UnityToEcs(info[i].doorEndPosition);
+                doorEndPositionComponent.Rotation = Converter.Vec3UnityToEcs(info[i].doorEndRotation);
             
                 var buttonActivateComponentPool = world.GetPool<ButtonActivateComponent>();
                 buttonActivateComponentPool.Add(doorButtonEntity);
@@ -59,8 +60,8 @@ namespace ECS.Door.System
                 ref var doorSpeedComponent = ref doorSpeedComponentPool.Get(doorButtonEntity);
                 doorSpeedComponent.Speed = info[i].moveSpeed;
 
-                var button = Startup.Spawn(data.buttonPrefab, buttonPosition.Position, info[i].buttonRotation);
-                var door = Startup.Spawn(doorButtonEntity, data.doorPrefab, doorStartPositionComponent.Position, doorStartPositionComponent.Rotation);
+                var button = Startup.Spawn(data.buttonPrefab, info[i].buttonPosition, info[i].buttonRotation);
+                var door = Startup.Spawn(doorButtonEntity, data.doorPrefab, info[i].doorStartPosition, info[i].doorStartRotation);
                 
                 EcsColorChangeService.ChangeColor(button, info[i].GetColor);
                 EcsColorChangeService.ChangeColor(door, info[i].GetColor);

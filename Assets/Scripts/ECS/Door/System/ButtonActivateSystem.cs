@@ -3,7 +3,6 @@ using ECS.Door.Components;
 using ECS.Player.Components;
 using ECS.Services;
 using Leopotam.EcsLite;
-using UnityEngine;
 
 namespace ECS.Door.System
 {

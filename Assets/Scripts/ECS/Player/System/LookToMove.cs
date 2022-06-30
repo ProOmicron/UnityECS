@@ -1,7 +1,8 @@
-﻿using ECS.Components;
+﻿using System;
+using ECS.Components;
 using ECS.Player.Components;
 using Leopotam.EcsLite;
-using UnityEngine;
+using ECS.Services;
 
 namespace ECS.Player.System
 {
@@ -25,10 +26,10 @@ namespace ECS.Player.System
 
                 if (Vector3.Distance(targetPointComponent.Position, playerTransformComponent.Position) > 1.0f)
                 {
-                    var angle = Mathf.Rad2Deg *
-                                Mathf.Atan2(moveDirectionComponent.Direction.x, moveDirectionComponent.Direction.z);
+                    var angle = 57.29578f *
+                                 (float)Math.Atan2(moveDirectionComponent.Direction.x, moveDirectionComponent.Direction.z);
 
-                    playerTransformComponent.Rotation = new Vector3(0.0f, angle, 0.0f);
+                    playerTransformComponent.Rotation = new Vector3(0.0f,  angle, 0.0f);
                 }
             }
         }

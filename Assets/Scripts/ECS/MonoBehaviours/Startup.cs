@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using ECS.Components;
 using ECS.Door.System;
 using ECS.Player.System;
+using ECS.Services;
 using Leopotam.EcsLite;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace ECS.MonoBehaviours
 {
@@ -57,8 +59,8 @@ namespace ECS.MonoBehaviours
             {
                 ref var transformComponent = ref transformPool.Get(entity.Key);
                 var objTransform = entity.Value.transform;
-                objTransform.position = transformComponent.Position;
-                objTransform.rotation = Quaternion.Euler(transformComponent.Rotation);
+                objTransform.position = Converter.Vec3EcsToUnity(transformComponent.Position);
+                objTransform.rotation = Quaternion.Euler(Converter.Vec3EcsToUnity(transformComponent.Rotation));
             }
         }
 

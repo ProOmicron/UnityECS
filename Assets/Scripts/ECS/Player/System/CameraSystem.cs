@@ -2,6 +2,7 @@ using ECS.Components;
 using ECS.MonoBehaviours;
 using ECS.Player.Components;
 using ECS.ScriptableObjects;
+using ECS.Services;
 using Leopotam.EcsLite;
 
 namespace ECS.Player.System
@@ -25,8 +26,8 @@ namespace ECS.Player.System
             
             Startup.Spawn(cameraEntity, data.cameraPrefab, data.playerStartPosition, data.playerStartRotation);
             
-            transformComponent.Position = data.playerStartPosition;
-            transformComponent.Rotation = data.playerStartRotation;
+            transformComponent.Position = Converter.Vec3UnityToEcs(data.playerStartPosition);
+            transformComponent.Rotation = Converter.Vec3UnityToEcs(data.playerStartRotation);
         }
 
         public void Run(EcsSystems systems)

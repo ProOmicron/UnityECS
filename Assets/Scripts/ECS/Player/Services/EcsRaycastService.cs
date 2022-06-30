@@ -4,20 +4,21 @@ namespace ECS.Player.Services
 {
     public static class EcsRaycastService
     {
-        public static bool GetPosition(Vector2 mousePosition, out Vector3 targetPos)
+        public static bool GetPosition(Vector2 mousePosition, out ECS.Services.Vector3 targetPos)
         {
             if (Camera.main != null)
             {
-                var hPlane = new Plane(Vector3.up, Vector3.zero);
+                var hPlane = new Plane(UnityEngine.Vector3.up, UnityEngine.Vector3.zero);
                 var ray = Camera.main.ScreenPointToRay(mousePosition);
                 if (hPlane.Raycast(ray, out var distance))
                 {
-                    targetPos = ray.GetPoint(distance);
+                    var point = ray.GetPoint(distance);
+                    targetPos = new ECS.Services.Vector3(point.x, point.y, point.z);
                     return true;
                 }
             }
 
-            targetPos = Vector3.zero;
+            targetPos = ECS.Services.Vector3.zero;
             return false;
         }
     }
