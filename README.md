@@ -5,6 +5,8 @@ ECS - https://github.com/Leopotam/ecslite
 
 Test - https://docs.google.com/document/d/1huX_UQjfb0f4OxgBPL4UXwpWuFNWQexld0mJrop7N8M/edit
 
+![alt text](Demo/Demo.gif "Demo")
+
 
 ### 26.06.2022 17:00 - 20:30 (3.5 h)
 
