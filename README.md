@@ -27,6 +27,12 @@ Test - https://docs.google.com/document/d/1huX_UQjfb0f4OxgBPL4UXwpWuFNWQexld0mJr
 1. Create Player dir
 2. Added Door and Button ECS
 
-### 28.06.2022 21:50 - 
+### 28.06.2022 21:50 - 00:00 (2.16 h)
 
 1. Added text in README.md
+2. Create custom Spawn system
+3. Create custom MonoBehaviour move system
+4. Create custom Tranform 
+5. Added Color change script
+6. Added Look at to move system
+7. Refactoring
