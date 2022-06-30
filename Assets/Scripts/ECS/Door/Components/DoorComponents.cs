@@ -4,7 +4,7 @@ namespace ECS.Door.Components
 {
     public struct DoorComponent
     {
-        public Transform Transform;
+        public int EntityID;
     }
     
     public struct DoorStartPositionComponent
@@ -29,15 +29,5 @@ namespace ECS.Door.Components
         public float ActivationDistance;
         public bool IsActivate;
         public float Progress;
-    }
-    
-    public struct ButtonDoorColorComponent
-    {
-        public Color Color;
-    }
-    
-    public struct DoorSpeedComponent
-    {
-        public float OpenCloseSpeed;
     }
 }

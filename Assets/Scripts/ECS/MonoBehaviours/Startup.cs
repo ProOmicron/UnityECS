@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using ECS.Components;
 using ECS.Door.System;
 using ECS.Player.System;
 using Leopotam.EcsLite;
@@ -10,6 +12,14 @@ namespace ECS.MonoBehaviours
         private EcsWorld _world;
         private EcsSystems _initSystems;
         private EcsSystems _runSystems;
+        
+        private static Dictionary<int, GameObject> _entityDictionary;
+
+        private void Awake()
+        {
+            _entityDictionary = new Dictionary<int, GameObject>();
+        }
+        
         void Start()
         {
             _world = new EcsWorld();
@@ -21,22 +31,35 @@ namespace ECS.MonoBehaviours
             _initSystems.Add(new ButtonDoorInitSystem());
             _initSystems.Init();
             
+            //Player
             _runSystems.Add(new CameraSystem());
-            //_runSystems.Add(new InputSystem());
             _runSystems.Add(new MoveSystem());
             _runSystems.Add(new MoveToPointSystem());
             _runSystems.Add(new OnClickInputSystem());
-
+            _runSystems.Add(new LookToMove());
+            
+            //Props
             _runSystems.Add(new ButtonActivateSystem());
             _runSystems.Add(new DoorOpenSystem());
             _runSystems.Init();
-            
-            
         }
 
         void Update()
         {
+            UpdateEntityTransforms();
             _runSystems.Run();
+        }
+
+        private void UpdateEntityTransforms()
+        {
+            var transformPool = _world.GetPool<TransformComponent>();
+            foreach (var entity in _entityDictionary)
+            {
+                ref var transformComponent = ref transformPool.Get(entity.Key);
+                var objTransform = entity.Value.transform;
+                objTransform.position = transformComponent.Position;
+                objTransform.rotation = Quaternion.Euler(transformComponent.Rotation);
+            }
         }
 
         private void OnDestroy()
@@ -44,6 +67,26 @@ namespace ECS.MonoBehaviours
             _runSystems.Destroy();
             _initSystems.Destroy();
             _world.Destroy();
+            _entityDictionary.Clear();
+            _entityDictionary = null;
+        }
+        
+        public static GameObject Spawn(int entityID, GameObject prefab, Vector3 position, Vector3 rotation)
+        {
+            var spawnedPlayer = Instantiate(prefab, position, Quaternion.Euler(rotation));
+            _entityDictionary.Add(entityID, spawnedPlayer);
+            return spawnedPlayer;
+        }
+        
+        public static GameObject Spawn(GameObject prefab, Vector3 position, Vector3 rotation)
+        {
+            var spawnedPlayer =Instantiate(prefab, position, Quaternion.Euler(rotation));
+            return spawnedPlayer;
+        }
+
+        public static GameObject GetObjectForEntityID(int entityID)
+        {
+            return _entityDictionary[entityID];
         }
     }
 }

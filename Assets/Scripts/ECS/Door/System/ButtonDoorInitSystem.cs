@@ -1,5 +1,7 @@
-﻿using ECS.Door.Components;
-using UnityEngine;
+﻿using ECS.Components;
+using ECS.Door.Components;
+using ECS.Door.Service;
+using ECS.MonoBehaviours;
 using ECS.ScriptableObjects;
 using Leopotam.EcsLite;
 
@@ -12,7 +14,7 @@ namespace ECS.Door.System
             var world = systems.GetWorld();
 
             var data = InitData.Load();
-            var info = data.DoorButtonInfos;
+            var info = data.doorButtonInfos;
             
             for (int i = 0; i < info.Length; i++)
             {
@@ -21,23 +23,29 @@ namespace ECS.Door.System
                 var doorComponentPool = world.GetPool<DoorComponent>();
                 doorComponentPool.Add(doorButtonEntity);
                 ref var doorComponent = ref doorComponentPool.Get(doorButtonEntity);
+                
+                var doorTransformComponentPool = world.GetPool<TransformComponent>();
+                doorTransformComponentPool.Add(doorButtonEntity);
+                ref var doorTransformComponent = ref doorTransformComponentPool.Get(doorButtonEntity);
+                doorTransformComponent.Position = info[i].doorStartPosition;
+                doorTransformComponent.Rotation = info[i].doorStartRotation;
 
                 var buttonPositionComponentPool = world.GetPool<ButtonPositionComponent>();
                 buttonPositionComponentPool.Add(doorButtonEntity);
                 ref var buttonPosition = ref buttonPositionComponentPool.Get(doorButtonEntity);
-                buttonPosition.Position = info[i].ButtonPosition;
+                buttonPosition.Position = info[i].buttonPosition;
             
                 var doorStartPositionComponentPool = world.GetPool<DoorStartPositionComponent>();
                 doorStartPositionComponentPool.Add(doorButtonEntity);
                 ref var doorStartPositionComponent = ref doorStartPositionComponentPool.Get(doorButtonEntity);
-                doorStartPositionComponent.Position = info[i].DoorStartPosition;
-                doorStartPositionComponent.Rotation = info[i].DoorStartRotation;
+                doorStartPositionComponent.Position = info[i].doorStartPosition;
+                doorStartPositionComponent.Rotation = info[i].doorStartRotation;
             
                 var doorEndPositionComponentPool = world.GetPool<DoorEndPositionComponent>();
                 doorEndPositionComponentPool.Add(doorButtonEntity);
                 ref var doorEndPositionComponent = ref doorEndPositionComponentPool.Get(doorButtonEntity);
-                doorEndPositionComponent.Position = info[i].DoorEndPosition;
-                doorEndPositionComponent.Rotation = info[i].DoorEndRotation;
+                doorEndPositionComponent.Position = info[i].doorEndPosition;
+                doorEndPositionComponent.Rotation = info[i].doorEndRotation;
             
                 var buttonActivateComponentPool = world.GetPool<ButtonActivateComponent>();
                 buttonActivateComponentPool.Add(doorButtonEntity);
@@ -46,19 +54,16 @@ namespace ECS.Door.System
                 buttonActivateComponent.ActivationDistance = data.buttonActivationDistance;
                 buttonActivateComponent.Progress = 0.0f;
             
-                var doorSpeedComponentPool = world.GetPool<DoorSpeedComponent>();
+                var doorSpeedComponentPool = world.GetPool<SpeedComponent>();
                 doorSpeedComponentPool.Add(doorButtonEntity);
                 ref var doorSpeedComponent = ref doorSpeedComponentPool.Get(doorButtonEntity);
-                doorSpeedComponent.OpenCloseSpeed = info[i].MoveSpeed;
-            
-                var buttonDoorColorComponentPool = world.GetPool<ButtonDoorColorComponent>();
-                buttonDoorColorComponentPool.Add(doorButtonEntity);
-                ref var buttonDoorColorComponent = ref buttonDoorColorComponentPool.Get(doorButtonEntity);
-                buttonDoorColorComponent.Color = info[i].Color;
+                doorSpeedComponent.Speed = info[i].moveSpeed;
 
-                var button = Object.Instantiate(data.buttonPrefab, buttonPosition.Position, Quaternion.identity);
-                var door = Object.Instantiate(data.doorPrefab, doorStartPositionComponent.Position, Quaternion.Euler(doorStartPositionComponent.Rotation));
-                doorComponent.Transform = door.transform;
+                var button = Startup.Spawn(data.buttonPrefab, buttonPosition.Position, info[i].buttonRotation);
+                var door = Startup.Spawn(doorButtonEntity, data.doorPrefab, doorStartPositionComponent.Position, doorStartPositionComponent.Rotation);
+                
+                EcsColorChangeService.ChangeColor(button, info[i].GetColor);
+                EcsColorChangeService.ChangeColor(door, info[i].GetColor);
             }
         }
     }

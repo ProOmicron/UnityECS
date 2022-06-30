@@ -1,4 +1,5 @@
-﻿using ECS.Door.Components;
+﻿using ECS.Components;
+using ECS.Door.Components;
 using ECS.Player.Components;
 using ECS.Services;
 using Leopotam.EcsLite;
@@ -10,29 +11,34 @@ namespace ECS.Door.System
     {
         public void Run(EcsSystems systems)
         {
-            var buttonFilter = systems.GetWorld().Filter<ButtonActivateComponent>().Inc<ButtonPositionComponent>().End();
+            var buttonFilter = systems.GetWorld().Filter<ButtonActivateComponent>().Inc<ButtonPositionComponent>().Inc<SpeedComponent>().End();
             var buttonPool = systems.GetWorld().GetPool<ButtonActivateComponent>();
             var buttonPositionPool = systems.GetWorld().GetPool<ButtonPositionComponent>();
+            var doorSpeedComponentPool = systems.GetWorld().GetPool<SpeedComponent>();
             
-            var playerFilter = systems.GetWorld().Filter<PlayerComponent>().End();
-            var playerPool = systems.GetWorld().GetPool<PlayerComponent>();
+            var playerFilter = systems.GetWorld().Filter<PlayerComponent>().Inc<TransformComponent>().End();
+            var transformPool = systems.GetWorld().GetPool<TransformComponent>();
 
             foreach (var buttonEntity in buttonFilter)
             {
                 ref var buttonComponent = ref buttonPool.Get(buttonEntity);
+                ref var buttonSpeedComponent = ref doorSpeedComponentPool.Get(buttonEntity);
                 var key = false;
+                
                 foreach (var playerEntity in playerFilter)
                 {
                     ref var buttonPositionComponent = ref buttonPositionPool.Get(buttonEntity);
-                    ref var playerComponent = ref playerPool.Get(playerEntity);
+                    ref var transformComponent = ref transformPool.Get(playerEntity);
 
-                    if (Vector3.Distance(buttonPositionComponent.Position, playerComponent.PlayerTransform.position) < buttonComponent.ActivationDistance)
+                    if (Vector3.Distance(buttonPositionComponent.Position, transformComponent.Position) < buttonComponent.ActivationDistance)
                     {
                         key = true;
                     }
                 }
+                
                 buttonComponent.IsActivate = key;
-                buttonComponent.Progress += EcsTimeService.DeltaTime * 0.1f;
+                if (key == true)
+                    buttonComponent.Progress += EcsTimeService.DeltaTime * buttonSpeedComponent.Speed;
             }
         }
     }

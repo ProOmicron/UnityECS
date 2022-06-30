@@ -1,7 +1,8 @@
+using ECS.Components;
+using ECS.MonoBehaviours;
 using ECS.Player.Components;
 using ECS.ScriptableObjects;
 using Leopotam.EcsLite;
-using UnityEngine;
 
 namespace ECS.Player.System
 {
@@ -12,30 +13,36 @@ namespace ECS.Player.System
             var world = systems.GetWorld();
             var cameraEntity = world.NewEntity();
 
+            var data = InitData.Load();
+
             var cameraPool = world.GetPool<CameraFollowComponent>();
             cameraPool.Add(cameraEntity);
             ref var cameraComponent = ref cameraPool.Get(cameraEntity);
             
-            var camera = Object.Instantiate(InitData.Load().cameraPrefab, Vector3.zero, Quaternion.identity);
-            cameraComponent.CameraTransform = camera.transform;
+            var transformPool = world.GetPool<TransformComponent>();
+            transformPool.Add(cameraEntity);
+            ref var transformComponent = ref transformPool.Get(cameraEntity);
+            
+            Startup.Spawn(cameraEntity, data.cameraPrefab, data.playerStartPosition, data.playerStartRotation);
+            
+            transformComponent.Position = data.playerStartPosition;
+            transformComponent.Rotation = data.playerStartRotation;
         }
 
         public void Run(EcsSystems systems)
         {
-            var filterPlayer = systems.GetWorld().Filter<PlayerComponent>().End();
-            var poolPlayer = systems.GetWorld().GetPool<PlayerComponent>();
+            var filterPlayer = systems.GetWorld().Filter<PlayerComponent>().Inc<TransformComponent>().End();
+            var transformPool = systems.GetWorld().GetPool<TransformComponent>();
             
-            var filterCamera = systems.GetWorld().Filter<CameraFollowComponent>().End();
-            var poolCamera = systems.GetWorld().GetPool<CameraFollowComponent>();
+            var filterCamera = systems.GetWorld().Filter<CameraFollowComponent>().Inc<TransformComponent>().End();
 
-            
             foreach (var entityCamera in filterCamera)
             foreach (var entityPlayer in filterPlayer)
             {
-                ref var playerComponent = ref poolPlayer.Get(entityPlayer);
-                ref var cameraComponent = ref poolCamera.Get(entityCamera);
+                ref var playerTransformComponent = ref transformPool.Get(entityPlayer);
+                ref var cameraTransformComponent = ref transformPool.Get(entityCamera);
 
-                cameraComponent.CameraTransform.position = playerComponent.PlayerTransform.position;
+                cameraTransformComponent.Position = playerTransformComponent.Position;
             }
         }
     }
