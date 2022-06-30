@@ -27,7 +27,7 @@ Test - https://docs.google.com/document/d/1huX_UQjfb0f4OxgBPL4UXwpWuFNWQexld0mJr
 1. Create Player dir
 2. Added Door and Button ECS
 
-### 28.06.2022 21:50 - 00:00 (2.16 h)
+### 28.06.2022 21:50 - 00:30 (~2.666 h)
 
 1. Added text in README.md
 2. Create custom Spawn system
@@ -36,3 +36,7 @@ Test - https://docs.google.com/document/d/1huX_UQjfb0f4OxgBPL4UXwpWuFNWQexld0mJr
 5. Added Color change script
 6. Added Look at to move system
 7. Refactoring
+8. Fix for dedicated server
+
+
+All component and system run in dedicated server
